@@ -1,0 +1,16 @@
+services:
+  node:
+    image: mysql:8.0
+    container_name: node
+    environment:
+      MYSQL_ROOT_PASSWORD: Admin123
+      MYSQL_DATABASE: node_assessment
+      MYSQL_USER: node_assessment
+      MYSQL_PASSWORD: Admin123
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
