@@ -15,7 +15,7 @@ class ListingService {
             formatted.agent = {
                 id: listing.agent.id,
                 name: listing.agent.name,
-                phone_number: listing.agent.phone_number
+                active: listing.agent.active
             };
         }
         return formatted;

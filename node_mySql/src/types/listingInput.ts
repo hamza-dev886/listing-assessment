@@ -22,7 +22,7 @@ export interface FormattedListing {
     agent?: {
         id: number;
         name: string;
-        phone_number: string;
+        active: boolean;
     };
     createdAt: Date;
     updatedAt: Date;
