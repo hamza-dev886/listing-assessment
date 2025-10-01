@@ -11,9 +11,9 @@ class ListingController {
             res.status(201).json(listing);
         } catch (err: unknown) {
             if (err instanceof AppError) {
-                res.status(err.statusCode).json({ message: err.message });
+                res.status(err.statusCode).json({ error: true, message: err.message });
             } else {
-                res.status(500).json({ message: 'Something went wrong' });
+                res.status(500).json({ error: true, message: 'Something went wrong' });
             }
         }
     }
@@ -24,9 +24,9 @@ class ListingController {
             res.json(listings);
         } catch (err: unknown) {
             if (err instanceof AppError) {
-                res.status(err.statusCode).json({ message: err.message });
+                res.status(err.statusCode).json({ error: true, message: err.message });
             } else {
-                res.status(500).json({ message: 'Something went wrong' });
+                res.status(500).json({ error: true, message: 'Something went wrong' });
             }
         }
     }
@@ -35,15 +35,15 @@ class ListingController {
         try {
             const listing = await listingService.getListingById(req.params.id);
             if (!listing) {
-                res.status(404).json({ message: 'Listing not found' });
+                res.status(404).json({ error: true, message: 'Listing not found' });
                 return;
             }
             res.json(listing);
         } catch (err: unknown) {
             if (err instanceof AppError) {
-                res.status(err.statusCode).json({ message: err.message });
+                res.status(err.statusCode).json({ error: true, message: err.message });
             } else {
-                res.status(500).json({ message: 'Something went wrong' });
+                res.status(500).json({ error: true, message: 'Something went wrong' });
             }
         }
     }
@@ -55,9 +55,9 @@ class ListingController {
             res.json(listing);
         } catch (err: unknown) {
             if (err instanceof AppError) {
-                res.status(err.statusCode).json({ message: err.message });
+                res.status(err.statusCode).json({ error: true, message: err.message });
             } else {
-                res.status(500).json({ message: 'Something went wrong' });
+                res.status(500).json({ error: true, message: 'Something went wrong' });
             }
         }
     }
@@ -68,9 +68,9 @@ class ListingController {
             res.json({ success: true });
         } catch (err: unknown) {
             if (err instanceof AppError) {
-                res.status(err.statusCode).json({ message: err.message });
+                res.status(err.statusCode).json({ error: true, message: err.message });
             } else {
-                res.status(500).json({ message: 'Something went wrong' });
+                res.status(500).json({ error: true, message: 'Something went wrong' });
             }
         }
     }
