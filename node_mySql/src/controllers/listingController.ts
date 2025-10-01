@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import listingService from '../services/listingService.js';
-import errorResponse from '../utils/errorResponse.js';
 import { ListingInputClass } from '../types/listingInput.js';
+import { AppError } from '../utils/AppError.js';
 
 class ListingController {
     async create(req: Request, res: Response): Promise<void> {
@@ -9,8 +9,12 @@ class ListingController {
             const input = new ListingInputClass(req.body);
             const listing = await listingService.createListing(input);
             res.status(201).json(listing);
-        } catch (err: any) {
-            errorResponse(res, err.message);
+        } catch (err: unknown) {
+            if (err instanceof AppError) {
+                res.status(err.statusCode).json({ message: err.message });
+            } else {
+                res.status(500).json({ message: 'Something went wrong' });
+            }
         }
     }
 
@@ -18,8 +22,12 @@ class ListingController {
         try {
             const listings = await listingService.getAllListings();
             res.json(listings);
-        } catch (err: any) {
-            errorResponse(res, "Something went wrong");
+        } catch (err: unknown) {
+            if (err instanceof AppError) {
+                res.status(err.statusCode).json({ message: err.message });
+            } else {
+                res.status(500).json({ message: 'Something went wrong' });
+            }
         }
     }
 
@@ -27,12 +35,16 @@ class ListingController {
         try {
             const listing = await listingService.getListingById(req.params.id);
             if (!listing) {
-                errorResponse(res, "Listing not found", 404);
+                res.status(404).json({ message: 'Listing not found' });
                 return;
             }
             res.json(listing);
-        } catch (err: any) {
-            errorResponse(res, "Something went wrong");
+        } catch (err: unknown) {
+            if (err instanceof AppError) {
+                res.status(err.statusCode).json({ message: err.message });
+            } else {
+                res.status(500).json({ message: 'Something went wrong' });
+            }
         }
     }
 
@@ -41,17 +53,25 @@ class ListingController {
             const input = new ListingInputClass(req.body);
             const listing = await listingService.updateListing(req.params.id, input);
             res.json(listing);
-        } catch (err: any) {
-            errorResponse(res, err.message);
+        } catch (err: unknown) {
+            if (err instanceof AppError) {
+                res.status(err.statusCode).json({ message: err.message });
+            } else {
+                res.status(500).json({ message: 'Something went wrong' });
+            }
         }
     }
 
     async remove(req: Request, res: Response): Promise<void> {
         try {
-            const deleted = await listingService.deleteListing(req.params.id, req.body.agentId);
+            await listingService.deleteListing(req.params.id, req.body.agentId);
             res.json({ success: true });
-        } catch (err: any) {
-            errorResponse(res, err.message);
+        } catch (err: unknown) {
+            if (err instanceof AppError) {
+                res.status(err.statusCode).json({ message: err.message });
+            } else {
+                res.status(500).json({ message: 'Something went wrong' });
+            }
         }
     }
 }

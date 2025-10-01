@@ -4,10 +4,10 @@ import { validateListing, handleValidationErrors } from '../validators/listingVa
 
 const router = express.Router();
 
-router.post('/create', validateListing, handleValidationErrors, listingController.create);
-router.get('/get', listingController.getAll);
-router.get('/get/:id', listingController.getById);
-router.put('/update/:id', validateListing, handleValidationErrors, listingController.update);
-router.delete('/delete/:id', listingController.remove);
+router.post('/', validateListing, handleValidationErrors, listingController.create);
+router.get('/:id', listingController.getById);
+router.get('/', listingController.getAll);
+router.put('/:id', validateListing, handleValidationErrors, listingController.update);
+router.delete('/:id', listingController.remove);
 
 export default router;
