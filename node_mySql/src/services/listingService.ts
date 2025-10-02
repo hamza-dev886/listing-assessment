@@ -22,6 +22,7 @@ class ListingService {
     }
 
     async createListing(payload: ListingInput): Promise<FormattedListing | null> {
+
         const agent = await prisma.agent.findUnique({ where: { id: payload.agentId } });
         if (!agent) {
             const error = new Error("Agent not found") as any;

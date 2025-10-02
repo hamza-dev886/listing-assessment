@@ -4,6 +4,8 @@ import { validateListing, handleValidationErrors } from '../validators/listingVa
 
 const router = express.Router();
 
+console.log('✅ listingRoutes.ts loaded');
+
 router.post('/', validateListing, handleValidationErrors, listingController.create);
 router.get('/:id', listingController.getById);
 router.get('/', listingController.getAll);

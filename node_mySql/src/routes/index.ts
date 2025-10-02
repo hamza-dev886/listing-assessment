@@ -3,6 +3,11 @@ import listingRoutes from './listingRoutes.js';
 
 const router = Router();
 
-router.use('/listings', listingRoutes);
+console.log('✅ Routes/index.ts loaded');
+
+router.use('/listings', (req, res, next) => {
+    console.log('✅ Hit /api/listings route');
+    next();
+}, listingRoutes);
 
 export default router;
